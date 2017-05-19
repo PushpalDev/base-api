@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/dernise/base-api/server"
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/server"
+	"github.com/pushpaldev/base-api/services"
 	"github.com/spf13/viper"
 	"gopkg.in/gin-gonic/gin.v1"
 )

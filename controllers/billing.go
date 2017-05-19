@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/dernise/base-api/helpers"
-	"github.com/dernise/base-api/models"
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/helpers"
+	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/services"
 	stripe "github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/plan"
 	"gopkg.in/gin-gonic/gin.v1"

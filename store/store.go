@@ -1,8 +1,8 @@
 package store
 
 import (
-	"github.com/dernise/base-api/helpers/params"
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/helpers/params"
+	"github.com/pushpaldev/base-api/models"
 )
 
 type Store interface {

@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/asaskevich/govalidator"
-	"github.com/dernise/base-api/helpers"
+	"github.com/pushpaldev/base-api/helpers"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/services"
 	"github.com/garyburd/redigo/redis"
 )
 

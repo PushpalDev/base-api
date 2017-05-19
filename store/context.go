@@ -1,7 +1,7 @@
 package store
 
 import (
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/models"
 	"golang.org/x/net/context"
 )
 

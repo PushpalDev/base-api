@@ -3,11 +3,11 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/dernise/base-api/helpers"
-	"github.com/dernise/base-api/helpers/params"
-	"github.com/dernise/base-api/models"
-	"github.com/dernise/base-api/services"
-	"github.com/dernise/base-api/store"
+	"github.com/pushpaldev/base-api/helpers"
+	"github.com/pushpaldev/base-api/helpers/params"
+	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/services"
+	"github.com/pushpaldev/base-api/store"
 	"github.com/stripe/stripe-go"
 	"github.com/stripe/stripe-go/card"
 	"github.com/stripe/stripe-go/customer"

@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"github.com/dernise/base-api/store"
-	"github.com/dernise/base-api/store/mongodb"
+	"github.com/pushpaldev/base-api/store"
+	"github.com/pushpaldev/base-api/store/mongodb"
 	"gopkg.in/gin-gonic/gin.v1"
 	mgo "gopkg.in/mgo.v2"
 )

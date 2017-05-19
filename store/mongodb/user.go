@@ -3,9 +3,9 @@ package mongodb
 import (
 	"net/http"
 
-	"github.com/dernise/base-api/helpers"
-	"github.com/dernise/base-api/helpers/params"
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/helpers"
+	"github.com/pushpaldev/base-api/helpers/params"
+	"github.com/pushpaldev/base-api/models"
 	"gopkg.in/mgo.v2/bson"
 )
 
