@@ -7,10 +7,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/dernise/base-api/helpers"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/pushpaldev/base-api/models"
 	"github.com/pushpaldev/base-api/services"
 	"github.com/pushpaldev/base-api/store"
-	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -55,6 +56,12 @@ func AuthMiddleware() gin.HandlerFunc {
 		if err != nil {
 			user, _ = store.FindUserById(c, claims["id"].(string))
 			services.GetRedis(c).SetValueForKey(user.Id, &user)
+		}
+
+		// Check if the token is still valid in the database
+		if !user.HasToken(claims["token"].(string)) {
+			c.AbortWithError(http.StatusUnauthorized, helpers.ErrorWithCode("token_invalidated", "This token isn't valid anymore"))
+			return
 		}
 
 		c.Set("currentUser", user)

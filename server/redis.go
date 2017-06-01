@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/pushpaldev/base-api/services"
 	"github.com/garyburd/redigo/redis"
+	"github.com/pushpaldev/base-api/services"
 )
 
 func (a *API) SetupRedis() {

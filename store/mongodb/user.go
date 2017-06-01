@@ -3,6 +3,8 @@ package mongodb
 import (
 	"net/http"
 
+	"time"
+
 	"github.com/pushpaldev/base-api/helpers"
 	"github.com/pushpaldev/base-api/helpers/params"
 	"github.com/pushpaldev/base-api/models"
@@ -84,4 +86,23 @@ func (db *mongo) UpdateUser(user *models.User, params params.M) error {
 	}
 
 	return nil
+}
+
+func (db *mongo) AddLoginToken(user *models.User, ip string) (*models.Token, error) {
+	session := db.Session.Copy()
+	defer session.Close()
+	users := db.C(models.UsersCollection).With(session)
+
+	token := &models.Token{
+		Id:         bson.NewObjectId().Hex(),
+		Ip:         ip,
+		CreatedAt:  time.Now().Unix(),
+		LastAccess: time.Now().Unix(),
+	}
+
+	if err := users.UpdateId(user.Id, bson.M{"$push": bson.M{"tokens": token}}); err != nil {
+		return nil, helpers.NewError(http.StatusInternalServerError, "user_token_creation_failed", "Failed to create the token.")
+	}
+
+	return token, nil
 }
