@@ -74,11 +74,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Set("currentUser", user)
 
 		if !hasFetchedRedis {
-			err := store.UpdateUser(c, params.M{"$set": params.M{"tokens." + strconv.Itoa(tokenIndex) + ".last_access": time.Now().Unix()}})
-			if err != nil {
-				println(err.Error())
-				return
-			}
+			store.UpdateUser(c, params.M{"$set": params.M{"tokens." + strconv.Itoa(tokenIndex) + ".last_access": time.Now().Unix()}})
 		}
 	}
 }
