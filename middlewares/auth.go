@@ -7,8 +7,12 @@ import (
 	"os"
 	"strings"
 
+	"strconv"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/pushpaldev/base-api/helpers"
+	"github.com/pushpaldev/base-api/helpers/params"
 	"github.com/pushpaldev/base-api/models"
 	"github.com/pushpaldev/base-api/services"
 	"github.com/pushpaldev/base-api/store"
@@ -52,18 +56,29 @@ func AuthMiddleware() gin.HandlerFunc {
 		user := &models.User{}
 
 		// Gets the user from the redis store
+		hasFetchedRedis := true
 		err = services.GetRedis(c).GetValueForKey(claims["id"].(string), &user)
 		if err != nil {
+			hasFetchedRedis = false
 			user, _ = store.FindUserById(c, claims["id"].(string))
 			services.GetRedis(c).SetValueForKey(user.Id, &user)
 		}
 
 		// Check if the token is still valid in the database
-		if !user.HasToken(claims["token"].(string)) {
+		tokenIndex, hasToken := user.HasToken(claims["token"].(string))
+		if !hasToken {
 			c.AbortWithError(http.StatusUnauthorized, helpers.ErrorWithCode("token_invalidated", "This token isn't valid anymore"))
 			return
 		}
 
 		c.Set("currentUser", user)
+
+		if !hasFetchedRedis {
+			err := store.UpdateUser(c, params.M{"$set": params.M{"tokens." + strconv.Itoa(tokenIndex) + ".last_access": time.Now().Unix()}})
+			if err != nil {
+				println(err.Error())
+				return
+			}
+		}
 	}
 }

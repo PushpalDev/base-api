@@ -55,13 +55,13 @@ func (user *User) BeforeCreate() error {
 	return nil
 }
 
-func (user *User) HasToken(tokenId string) bool {
-	for _, token := range user.Tokens {
+func (user *User) HasToken(tokenId string) (int, bool) {
+	for index, token := range user.Tokens {
 		if token.Id == tokenId {
-			return true
+			return index, true
 		}
 	}
-	return false
+	return -1, false
 }
 
 const UsersCollection = "users"
