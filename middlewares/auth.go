@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/dernise/base-api/models"
-	"github.com/dernise/base-api/services"
-	"github.com/dernise/base-api/store"
+	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/services"
+	"github.com/pushpaldev/base-api/store"
 	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/gin-gonic/gin.v1"
 )

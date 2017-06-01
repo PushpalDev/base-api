@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/services"
 	"github.com/spf13/viper"
 	"gopkg.in/gin-gonic/gin.v1"
 	"gopkg.in/mgo.v2"

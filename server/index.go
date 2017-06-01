@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/models"
 	"gopkg.in/mgo.v2"
 )
 

@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/dernise/base-api/controllers"
-	"github.com/dernise/base-api/middlewares"
+	"github.com/pushpaldev/base-api/controllers"
+	"github.com/pushpaldev/base-api/middlewares"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

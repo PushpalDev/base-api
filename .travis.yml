@@ -9,7 +9,7 @@ services:
 
 script: BASEAPI_ENV=testing go test ./...
 
-go_import_path: github.com/dernise/base-api
+go_import_path: github.com/pushpaldev/base-api
   
 notifications:
   email: false

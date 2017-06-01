@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/services"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

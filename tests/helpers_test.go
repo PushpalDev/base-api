@@ -8,9 +8,9 @@ import (
 
 	"time"
 
-	"github.com/dernise/base-api/models"
-	"github.com/dernise/base-api/server"
-	"github.com/dernise/base-api/services"
+	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/server"
+	"github.com/pushpaldev/base-api/services"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/spf13/viper"
 	"gopkg.in/gin-gonic/gin.v1"

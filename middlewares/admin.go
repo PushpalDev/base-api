@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/dernise/base-api/helpers"
-	"github.com/dernise/base-api/store"
+	"github.com/pushpaldev/base-api/helpers"
+	"github.com/pushpaldev/base-api/store"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

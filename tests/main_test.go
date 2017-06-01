@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dernise/base-api/models"
-	"github.com/dernise/base-api/server"
+	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/server"
 )
 
 var api *server.API

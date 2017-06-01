@@ -3,8 +3,8 @@ package store
 import (
 	"context"
 
-	"github.com/dernise/base-api/helpers/params"
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/helpers/params"
+	"github.com/pushpaldev/base-api/models"
 )
 
 func CreateUser(c context.Context, record *models.User) error {

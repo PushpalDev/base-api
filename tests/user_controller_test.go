@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/models"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/mgo.v2/bson"
 )

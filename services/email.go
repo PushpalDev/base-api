@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/dernise/base-api/models"
+	"github.com/pushpaldev/base-api/models"
 	"github.com/sendgrid/rest"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
