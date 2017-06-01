@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/dernise/base-api/helpers"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/pushpaldev/base-api/helpers"
 	"github.com/pushpaldev/base-api/models"
 	"github.com/pushpaldev/base-api/services"
 	"github.com/pushpaldev/base-api/store"
