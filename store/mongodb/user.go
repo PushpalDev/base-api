@@ -88,12 +88,12 @@ func (db *mongo) UpdateUser(user *models.User, params params.M) error {
 	return nil
 }
 
-func (db *mongo) AddLoginToken(user *models.User, ip string) (*models.Token, error) {
+func (db *mongo) AddLoginToken(user *models.User, ip string) (*models.LoginToken, error) {
 	session := db.Session.Copy()
 	defer session.Close()
 	users := db.C(models.UsersCollection).With(session)
 
-	token := &models.Token{
+	token := &models.LoginToken{
 		Id:         bson.NewObjectId().Hex(),
 		Ip:         ip,
 		CreatedAt:  time.Now().Unix(),
@@ -105,4 +105,16 @@ func (db *mongo) AddLoginToken(user *models.User, ip string) (*models.Token, err
 	}
 
 	return token, nil
+}
+
+func (db *mongo) RemoveLoginToken(user *models.User, tokenId string) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	users := db.C(models.UsersCollection).With(session)
+
+	if err := users.UpdateId(user.Id, bson.M{"$pull": bson.M{"tokens": bson.M{"_id": tokenId}}}); err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "user_token_deletion_failed", "Failed to delete the token.")
+	}
+
+	return nil
 }

@@ -27,6 +27,10 @@ func UpdateUser(c context.Context, params params.M) error {
 	return FromContext(c).UpdateUser(Current(c), params)
 }
 
-func AddLoginToken(c context.Context, user *models.User, ip string) (*models.Token, error) {
+func AddLoginToken(c context.Context, user *models.User, ip string) (*models.LoginToken, error) {
 	return FromContext(c).AddLoginToken(user, ip)
+}
+
+func RemoveLoginToken(c context.Context) error {
+	return FromContext(c).RemoveLoginToken(Current(c), c.Value(LoginTokenKey).(string))
 }

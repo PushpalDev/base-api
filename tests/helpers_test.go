@@ -38,7 +38,7 @@ func SendRequestWithToken(parameters []byte, method string, url string, authToke
 func CreateUserAndGenerateToken() (*models.User, string) {
 	users := api.Database.C(models.UsersCollection)
 
-	userToken := models.Token{
+	userToken := models.LoginToken{
 		Id:         bson.NewObjectId().String(),
 		Ip:         "127.0.0.1",
 		CreatedAt:  time.Now().Unix(),
@@ -53,7 +53,7 @@ func CreateUserAndGenerateToken() (*models.User, string) {
 		Password:  "strongPassword",
 		Active:    true,
 		StripeId:  "cus_AKlEqL9MjNICJx",
-		Tokens: []models.Token{
+		Tokens: []models.LoginToken{
 			userToken,
 		},
 		Admin: true,

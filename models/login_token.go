@@ -1,6 +1,6 @@
 package models
 
-type Token struct {
+type LoginToken struct {
 	Id         string `json:"id" bson:"_id"`
 	Ip         string `json:"ip" bson:"ip"`
 	CreatedAt  int64  `json:"created_at" bson:"created_at"`

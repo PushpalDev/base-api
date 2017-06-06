@@ -70,3 +70,13 @@ func (ac AuthController) Authentication(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"token": tokenString, "users": user.Sanitize()})
 }
+
+func (ac AuthController) LogOut(c *gin.Context) {
+	if err := store.RemoveLoginToken(c); err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	c.JSON(200, nil)
+}

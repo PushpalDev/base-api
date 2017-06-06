@@ -6,8 +6,9 @@ import (
 )
 
 const (
-	currentKey = "currentUser"
-	storeKey   = "store"
+	CurrentKey    = "currentUser"
+	LoginTokenKey = "currentLoginToken"
+	StoreKey      = "store"
 )
 
 type Setter interface {
@@ -15,13 +16,13 @@ type Setter interface {
 }
 
 func Current(c context.Context) *models.User {
-	return c.Value(currentKey).(*models.User)
+	return c.Value(CurrentKey).(*models.User)
 }
 
 func FromContext(c context.Context) Store {
-	return c.Value(storeKey).(Store)
+	return c.Value(StoreKey).(Store)
 }
 
 func ToContext(c Setter, store Store) {
-	c.Set(storeKey, store)
+	c.Set(StoreKey, store)
 }
