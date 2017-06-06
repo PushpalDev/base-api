@@ -10,18 +10,17 @@ import (
 )
 
 type User struct {
-	Id                string       `json:"id" bson:"_id,omitempty" valid:"-"`
-	Firstname         string       `json:"firstname" bson:"firstname" valid:"required"`
-	Lastname          string       `json:"lastname" bson:"lastname" valid:"required"`
-	Password          string       `json:"password" bson:"password" valid:"required"`
-	Email             string       `json:"email" bson:"email" valid:"email,required"`
-	Active            bool         `json:"active" bson:"active"`
-	ActivationKey     string       `json:"activationKey" bson:"activationKey"`
-	ResetKey          string       `json:"resetKey" bson:"resetKey"`
-	StripeId          string       `json:"stripeId" bson:"stripeId"`
-	Admin             bool         `json:"admin" bson:"admin"`
-	CurrentLoginToken string       `json:"-" bson:"-"`
-	Tokens            []LoginToken `json:"tokens" bson:"tokens"`
+	Id            string       `json:"id" bson:"_id,omitempty" valid:"-"`
+	Firstname     string       `json:"firstname" bson:"firstname" valid:"required"`
+	Lastname      string       `json:"lastname" bson:"lastname" valid:"required"`
+	Password      string       `json:"password" bson:"password" valid:"required"`
+	Email         string       `json:"email" bson:"email" valid:"email,required"`
+	Active        bool         `json:"active" bson:"active"`
+	ActivationKey string       `json:"activationKey" bson:"activationKey"`
+	ResetKey      string       `json:"resetKey" bson:"resetKey"`
+	StripeId      string       `json:"stripeId" bson:"stripeId"`
+	Admin         bool         `json:"admin" bson:"admin"`
+	Tokens        []LoginToken `json:"tokens" bson:"tokens"`
 }
 
 type SanitizedUser struct {
