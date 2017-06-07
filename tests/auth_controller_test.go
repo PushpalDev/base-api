@@ -19,6 +19,11 @@ func TestAuth(t *testing.T) {
 }
 
 func TestLogOut(t *testing.T) {
+	defer ResetDatabase()
+
 	resp := SendRequestWithToken(nil, "GET", "/v1/auth/logout", authToken)
 	assert.Equal(t, http.StatusOK, resp.Code)
+
+	resp = SendRequestWithToken(nil, "GET", "/v1/users/"+user.Id, authToken)
+	assert.Equal(t, http.StatusUnauthorized, resp.Code)
 }

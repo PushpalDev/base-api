@@ -83,6 +83,11 @@ func CreateUserAndGenerateToken() (*models.User, string) {
 	return &user, tokenString
 }
 
+func ResetDatabase() {
+	api.Database.DropDatabase()
+	user, authToken = CreateUserAndGenerateToken()
+}
+
 func SetupApi() *server.API {
 	api := &server.API{Router: gin.Default(), Config: viper.New()}
 

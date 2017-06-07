@@ -78,5 +78,7 @@ func (ac AuthController) LogOut(c *gin.Context) {
 		return
 	}
 
+	services.GetRedis(c).InvalidateObject(store.Current(c).Id)
+
 	c.JSON(200, nil)
 }
