@@ -47,7 +47,6 @@ func (a *API) SetupRouter() {
 			users.POST("/", userController.CreateUser)
 			users.GET("/:id/activate/:activationKey", userController.ActivateUser)
 			//users.POST("/:id/reset_password", userController.ResetPassword)
-
 			users.Use(authMiddleware)
 			users.GET("/:id", userController.GetUser)
 		}
@@ -66,6 +65,8 @@ func (a *API) SetupRouter() {
 		{
 			authController := controllers.NewAuthController()
 			authentication.POST("/", authController.Authentication)
+			authentication.Use(authMiddleware)
+			authentication.GET("/logout", authController.LogOut)
 		}
 
 		billing := v1.Group("/billing")

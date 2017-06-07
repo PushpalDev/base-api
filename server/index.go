@@ -18,6 +18,9 @@ func (a *API) SetupIndexes() error {
 			Key:    []string{"email"},
 			Unique: true,
 		},
+		{
+			Key: []string{"tokens._id"},
+		},
 	}
 
 	for collection, indexes := range collectionIndexes {

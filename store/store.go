@@ -11,4 +11,6 @@ type Store interface {
 	ActivateUser(string, string) error
 	FindUser(params.M) (*models.User, error)
 	UpdateUser(*models.User, params.M) error
+	AddLoginToken(*models.User, string) (*models.LoginToken, error)
+	RemoveLoginToken(*models.User, string) error
 }

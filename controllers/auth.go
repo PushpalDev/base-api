@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/pushpaldev/base-api/config"
 	"github.com/pushpaldev/base-api/helpers"
 	"github.com/pushpaldev/base-api/helpers/params"
 	"github.com/pushpaldev/base-api/models"
+	"github.com/pushpaldev/base-api/services"
 	"github.com/pushpaldev/base-api/store"
-	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/gin-gonic/gin.v1"
 )
@@ -49,12 +50,35 @@ func (ac AuthController) Authentication(c *gin.Context) {
 		return
 	}
 
+	apiToken, err := store.AddLoginToken(c, user, c.ClientIP())
+	if err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
 	token := jwt.New(jwt.GetSigningMethod(jwt.SigningMethodRS256.Alg()))
 	claims := make(jwt.MapClaims)
 	claims["iat"] = time.Now().Unix()
 	claims["id"] = user.Id
+	claims["token"] = apiToken.Id
+
 	token.Claims = claims
 	tokenString, err := token.SignedString(privateKey)
 
+	services.GetRedis(c).InvalidateObject(user.Id)
+
 	c.JSON(http.StatusOK, gin.H{"token": tokenString, "users": user.Sanitize()})
+}
+
+func (ac AuthController) LogOut(c *gin.Context) {
+	if err := store.RemoveLoginToken(c); err != nil {
+		c.Error(err)
+		c.Abort()
+		return
+	}
+
+	services.GetRedis(c).InvalidateObject(store.Current(c).Id)
+
+	c.JSON(200, nil)
 }

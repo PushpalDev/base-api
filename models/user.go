@@ -10,16 +10,17 @@ import (
 )
 
 type User struct {
-	Id            string `json:"id" bson:"_id,omitempty" valid:"-"`
-	Firstname     string `json:"firstname" bson:"firstname" valid:"required"`
-	Lastname      string `json:"lastname" bson:"lastname" valid:"required"`
-	Password      string `json:"password" bson:"password" valid:"required"`
-	Email         string `json:"email" bson:"email" valid:"email,required"`
-	Active        bool   `json:"active" bson:"active"`
-	ActivationKey string `json:"activationKey" bson:"activationKey"`
-	ResetKey      string `json:"resetKey" bson:"resetKey"`
-	StripeId      string `json:"stripeId" bson:"stripeId"`
-	Admin         bool   `json:"admin" bson:"admin"`
+	Id            string       `json:"id" bson:"_id,omitempty" valid:"-"`
+	Firstname     string       `json:"firstname" bson:"firstname" valid:"required"`
+	Lastname      string       `json:"lastname" bson:"lastname" valid:"required"`
+	Password      string       `json:"password" bson:"password" valid:"required"`
+	Email         string       `json:"email" bson:"email" valid:"email,required"`
+	Active        bool         `json:"active" bson:"active"`
+	ActivationKey string       `json:"activationKey" bson:"activationKey"`
+	ResetKey      string       `json:"resetKey" bson:"resetKey"`
+	StripeId      string       `json:"stripeId" bson:"stripeId"`
+	Admin         bool         `json:"admin" bson:"admin"`
+	Tokens        []LoginToken `json:"tokens" bson:"tokens"`
 }
 
 type SanitizedUser struct {
@@ -52,6 +53,15 @@ func (user *User) BeforeCreate() error {
 	}
 
 	return nil
+}
+
+func (user *User) HasToken(tokenId string) (int, bool) {
+	for index, token := range user.Tokens {
+		if token.Id == tokenId {
+			return index, true
+		}
+	}
+	return -1, false
 }
 
 const UsersCollection = "users"

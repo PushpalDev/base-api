@@ -8,11 +8,12 @@ import (
 
 	"time"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/pushpaldev/base-api/models"
 	"github.com/pushpaldev/base-api/server"
 	"github.com/pushpaldev/base-api/services"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/spf13/viper"
+	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/gin-gonic/gin.v1"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -37,6 +38,13 @@ func SendRequestWithToken(parameters []byte, method string, url string, authToke
 func CreateUserAndGenerateToken() (*models.User, string) {
 	users := api.Database.C(models.UsersCollection)
 
+	userToken := models.LoginToken{
+		Id:         bson.NewObjectId().String(),
+		Ip:         "127.0.0.1",
+		CreatedAt:  time.Now().Unix(),
+		LastAccess: time.Now().Unix(),
+	}
+
 	user := models.User{
 		Id:        bson.NewObjectId().Hex(),
 		Email:     "jeanmichel.lecul@gmail.com",
@@ -45,8 +53,14 @@ func CreateUserAndGenerateToken() (*models.User, string) {
 		Password:  "strongPassword",
 		Active:    true,
 		StripeId:  "cus_AKlEqL9MjNICJx",
-		Admin:     true,
+		Tokens: []models.LoginToken{
+			userToken,
+		},
+		Admin: true,
 	}
+
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	user.Password = string(hashedPassword)
 
 	users.Insert(user)
 
@@ -60,11 +74,18 @@ func CreateUserAndGenerateToken() (*models.User, string) {
 	//claims["exp"] = time.Now().Add(time.Hour * time.Duration(settings.Get().JWTExpirationDelta)).Unix()
 	claims["iat"] = time.Now().Unix()
 	claims["id"] = user.Id
+	claims["token"] = userToken.Id
+
 	token.Claims = claims
 
 	tokenString, _ := token.SignedString(privateKey)
 
 	return &user, tokenString
+}
+
+func ResetDatabase() {
+	api.Database.DropDatabase()
+	user, authToken = CreateUserAndGenerateToken()
 }
 
 func SetupApi() *server.API {

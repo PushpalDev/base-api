@@ -3,6 +3,8 @@ package mongodb
 import (
 	"net/http"
 
+	"time"
+
 	"github.com/pushpaldev/base-api/helpers"
 	"github.com/pushpaldev/base-api/helpers/params"
 	"github.com/pushpaldev/base-api/models"
@@ -81,6 +83,37 @@ func (db *mongo) UpdateUser(user *models.User, params params.M) error {
 	err := users.UpdateId(user.Id, params)
 	if err != nil {
 		return helpers.NewError(http.StatusInternalServerError, "user_update_failed", "Failed to update the user")
+	}
+
+	return nil
+}
+
+func (db *mongo) AddLoginToken(user *models.User, ip string) (*models.LoginToken, error) {
+	session := db.Session.Copy()
+	defer session.Close()
+	users := db.C(models.UsersCollection).With(session)
+
+	token := &models.LoginToken{
+		Id:         bson.NewObjectId().Hex(),
+		Ip:         ip,
+		CreatedAt:  time.Now().Unix(),
+		LastAccess: time.Now().Unix(),
+	}
+
+	if err := users.UpdateId(user.Id, bson.M{"$push": bson.M{"tokens": token}}); err != nil {
+		return nil, helpers.NewError(http.StatusInternalServerError, "user_token_creation_failed", "Failed to create the token.")
+	}
+
+	return token, nil
+}
+
+func (db *mongo) RemoveLoginToken(user *models.User, tokenId string) error {
+	session := db.Session.Copy()
+	defer session.Close()
+	users := db.C(models.UsersCollection).With(session)
+
+	if err := users.UpdateId(user.Id, bson.M{"$pull": bson.M{"tokens": bson.M{"_id": tokenId}}}); err != nil {
+		return helpers.NewError(http.StatusInternalServerError, "user_token_deletion_failed", "Failed to delete the token.")
 	}
 
 	return nil
