@@ -54,7 +54,7 @@ func (cc CardController) AddCard(c *gin.Context) {
 	}
 	services.GetRedis(c).InvalidateObject(user.StripeId)
 
-	c.JSON(http.StatusCreated, gin.H{"cards": response})
+	c.JSON(http.StatusCreated, response)
 }
 
 func (cc CardController) GetCards(c *gin.Context) {
@@ -95,7 +95,7 @@ func (cc CardController) GetCards(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"cards": stripeCards})
+	c.JSON(http.StatusOK, stripeCards)
 }
 
 func (cc CardController) createCustomer(c *gin.Context, user *models.User) (string, error) {

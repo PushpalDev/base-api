@@ -59,7 +59,7 @@ func (sc StripeSubscriptionController) GetSubscriptions(c *gin.Context) {
 		services.GetRedis(c).SetValueForKey(user.StripeId+".subscriptions", subscriptions)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"subscriptions": subscriptions})
+	c.JSON(http.StatusOK, subscriptions)
 }
 
 func (sc StripeSubscriptionController) DeleteSubscription(c *gin.Context) {

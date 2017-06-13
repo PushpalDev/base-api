@@ -16,6 +16,7 @@ type UserController struct{}
 func NewUserController() UserController {
 	return UserController{}
 }
+
 func (uc UserController) GetUser(c *gin.Context) {
 	user, err := store.FindUserById(c, c.Param("id"))
 
@@ -24,7 +25,7 @@ func (uc UserController) GetUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"users": user.Sanitize()})
+	c.JSON(http.StatusOK, user.Sanitize())
 }
 
 func (uc UserController) CreateUser(c *gin.Context) {
@@ -46,7 +47,7 @@ func (uc UserController) CreateUser(c *gin.Context) {
 	templateLink := "./templates/mail_activate_account.html"
 	services.GetEmailSender(c).SendEmailFromTemplate(user, subject, templateLink)
 
-	c.JSON(http.StatusCreated, gin.H{"users": user.Sanitize()})
+	c.JSON(http.StatusCreated, user.Sanitize())
 }
 
 func (uc UserController) ActivateUser(c *gin.Context) {
