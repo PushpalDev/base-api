@@ -1,4 +1,4 @@
-# base-API  [![Build Status](https://travis-ci.com/pushpaldev/base-api.svg?token=AbEANjysKDJ24sgJwcmH&branch=master)](https://travis-ci.com/pushpaldev/base-api)
+# base-API  [![Build Status](https://travis-ci.org/PushpalDev/base-api.svg?branch=master)](https://travis-ci.org/PushpalDev/base-api)
 
 This is the main repo of the base API. This API is a framework to build an API for a project. It contains the basics like users management, stripe implementation, authentication with JWT and security features like rate limits and access tokens management. 
 
